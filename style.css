@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --drop: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #05668d;
+  height: 100vh;
+}
+
+.main-view {
+  width: 70%;
+  height: 70%;
+  border: 20px solid #00a896;
+  background-color: #fff;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.game-view {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+span {
+  /* transform: translateY(var(--drop)); */
+  /* position: absolute; */
+  /* top: var(--drop);
+} */
+  display: inline-block;
+  margin-right: 40px;
+}
+
+.hide {
+  display: none;
+}
+
+.moving {
+  /* position: absolute; */
+}
+
+.first {
+  transform: translateY(0);
+}
