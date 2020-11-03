@@ -2,6 +2,10 @@ const gameView = document.querySelector(".game-view");
 const startBtn = document.querySelector(".start-btn");
 const gameInput = document.querySelector(".game-input");
 const gameForm = document.querySelector(".game-form");
+const containers = document.querySelectorAll(".container");
+const containerOne = document.querySelector("#container1");
+const containerTwo = document.querySelector("#container2");
+const containerThree = document.querySelector("#container3");
 // const span = document.querySelector(".game-view span");
 
 
@@ -11,6 +15,7 @@ let proceed = 0;
 // const unit = "px";
 let funcArray = [];
 let first = true;
+let second = false;
 let done = 0;
 let randomWords = [];
 
@@ -49,19 +54,40 @@ function handleGamePlay(event){
     })
 }
 
+function dada(number, word){
+    const containerEls = containerTwo.querySelectorAll(".container-el");
+    // let forBlank = 3-(2*number)
+    // let forWord = 2*number
+    if(word === undefined || number < 2) return;
+    if(number === 2){
+        second = true;
+    }
+    if(second === true){
+        containerEls[number-2].innerText = word
+    }else{
+       containerEls[number-3].innerText = "";
+       containerEls[number-2].innerText = word
+    }
+
+    second = false;
+}
+
 function rainWord(number, word){
-    const containers = document.querySelectorAll(".container");
+    const containerEls = containerOne.querySelectorAll(".container-el");
+    // let forBlank = 3-(2*number)
+    // let forWord = 2*number
     if(word === undefined) return;
     if(first === true){
-        containers[number].innerText = word
+        containerEls[number].innerText = word
     }else{
-        containers[number-(3-(2*number))].innerText = "";
-        containers[number+(2*number)].innerText = word
+        containerEls[number-1].innerText = "";
+        containerEls[number].innerText = word
     }
 
     
         
     first = false;    
+
    
     // const divs = document.querySelectorAll(".moving");
     // first = true;
@@ -122,14 +148,24 @@ function showRandomWords(){
     const randomNum = Math.floor(Math.random() * (words.length + 1));
     const randomWord = words[randomNum];
     if(done == 0){
-        for(let i = 0; i < (gameView.offsetHeight/20)*3; i++){
-            const div = document.createElement("div")
-            div.id = i + 1;
-            div.classList.add("container");
+        for(let i = 0; i < (gameView.offsetHeight/20); i++){
+            const diva = document.createElement("div");
+            const divb = document.createElement("div");
+            const divc = document.createElement("div");
+            // div.id = i + 1;
+            diva.classList.add("container-el");
+            divb.classList.add("container-el");
+            divc.classList.add("container-el");
             // div.innerText = randomWord;
-            gameView.appendChild(div);
+        //    containers.forEach(container => container.appendChild(div));
+            containerOne.appendChild(diva)
+            containerTwo.appendChild(divb)
+            containerThree.appendChild(divc)
         }
     }
+
+
+
    
     // const wordSpan = document.createElement("span");
     // const wordDiv = document.createElement("div")
@@ -147,16 +183,26 @@ function showRandomWords(){
 
     // container.appendChild(wordDiv);
 
-    randomWords.push(randomWord)
-    funcArray.push(function (){
-        return randomWords[proceed];
-    })
+    // randomWords.push(randomWord)
 
-    funcArray.forEach(func =>{
-        rainWord(proceed, func());
-    })
+    // gameView.innerHTML = randomWords.map( (el, i) => {
+        
+    //     return `<div class="container">
+    //             ${}
+    //         </div>`
+    // })
 
-    
+    // funcArray.push(function (){
+    //     return randomWords[proceed];
+    // })
+
+    // funcArray.forEach(func =>{
+    //     rainWord(proceed, func());
+    // })
+
+    rainWord(proceed, randomWord);
+    dada(proceed, randomWord);
+    // adas(proceed,randomWord);
     done++;
     proceed++;
 }
@@ -167,4 +213,4 @@ startBtn.addEventListener("click", rainWord);
 startBtn.addEventListener("click", genertateRandomWord);
 //array에 숫자넣어서 해보기..
 gameForm.addEventListener("submit", handleGamePlay);
-rainWord(proceed); 
+// rainWord(proceed); 
