@@ -18,6 +18,7 @@ let first = true;
 let second = false;
 let done = 0;
 let randomWords = [];
+let oper = false;
 
 function handleTextAlign(){
     const randomNumForStyle = Math.floor(Math.random() * 4);
@@ -54,42 +55,66 @@ function handleGamePlay(event){
     })
 }
 
-function dada(number, word){
-    const containerEls = containerTwo.querySelectorAll(".container-el");
-    // let forBlank = 3-(2*number)
-    // let forWord = 2*number
-    if(word === undefined || number < 2) return;
-    if(number === 2){
-        second = true;
-    }
-    if(second === true){
-        containerEls[number-2].innerText = word
-    }else{
-       containerEls[number-3].innerText = "";
-       containerEls[number-2].innerText = word
-    }
+// function dada(number, word){
+//     const containerEls = containerTwo.querySelectorAll(".container-col");
+//     // let forBlank = 3-(2*number)
+//     // let forWord = 2*number
+//     if(word === undefined || number < 2) return;
+//     if(number === 2){
+//         second = true;
+//     }
+//     if(second === true){
+//         containerEls[number-2].innerText = word
+//     }else{
+//        containerEls[number-3].innerText = "";
+//        containerEls[number-2].innerText = word
+//     }
 
-    second = false;
-}
+//     second = false;
+// }
 
 function rainWord(number, word){
-    const containerEls = containerOne.querySelectorAll(".container-el");
-    const containerHTML = `<div>${word}</div>`
+    oper = !oper;
+    const containerCols = containerOne.querySelectorAll(".container-col");
+    if(oper === true){
+        const div = document.createElement("div");
+        div.classList.add("container-el");
+        div.innerText = word;
+        containerCols[0].appendChild(div); 
+    }else{
+        const resultIndex = [...containerCols].findIndex( col => col.hasChildNodes())//얘보다 더 좋은 방법을 찾아야 
+        const childDiv = containerCols[resultIndex].children[0]
+        const originWord = childDiv.innerText;
+        childDiv.innerText = "";
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("container-el");
+        newDiv.innerText = originWord;
+        containerCols[resultIndex +  1].appendChild(newDiv);
+    }
+    
+
+    
+    // const containerHTML = `<div>${word}</div>`
     // let forBlank = 3-(2*number)
     // let forWord = 2*number
-    if(word === undefined) return;
-    if(first === true){
-        containerEls[number].innerHTML = containerHTML
-    }else{
-        containerEls[number-1].innerText = "";
-        containerEls[number].innerHTML = containerHTML
-    }
+    // if(word === undefined) return;
+    // if(first === true){
+    //     containerEls[number].innerHTML = containerHTML
+    // }else{
+    //     containerEls[number-1].innerText = "";
+    //     containerEls[number].innerHTML = containerHTML
+    // }
 
-    if(second === true){
+    // if(second === true){
         
-    }
+    // }
         
-    first = false;    
+    // first = false;
+    // containerEls.forEach((el, i) => {
+    //     if(oper === true){
+            
+    //     }
+    // })    
 
    
     // const divs = document.querySelectorAll(".moving");
@@ -157,9 +182,9 @@ function showRandomWords(){
             const divb = document.createElement("div");
             const divc = document.createElement("div");
             // div.id = i + 1;
-            diva.classList.add("container-el");
-            divb.classList.add("container-el");
-            divc.classList.add("container-el");
+            diva.classList.add("container-col");
+            divb.classList.add("container-col");
+            divc.classList.add("container-col");
             // div.innerText = randomWord;
         //    containers.forEach(container => container.appendChild(div));
             containerOne.appendChild(diva)
@@ -205,7 +230,7 @@ function showRandomWords(){
     // })
 
     rainWord(proceed, randomWord);
-    dada(proceed, randomWord);
+    // dada(proceed, randomWord);
     // adas(proceed,randomWord);
     done++;
     proceed++;
