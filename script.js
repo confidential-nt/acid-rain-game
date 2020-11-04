@@ -74,14 +74,15 @@ function dada(number, word){
 
 function rainWord(number, word){
     const containerEls = containerOne.querySelectorAll(".container-el");
+    const containerHTML = `<div>${word}</div>`
     // let forBlank = 3-(2*number)
     // let forWord = 2*number
     if(word === undefined) return;
     if(first === true){
-        containerEls[number].innerText = word
+        containerEls[number].innerHTML = containerHTML
     }else{
         containerEls[number-1].innerText = "";
-        containerEls[number].innerText = word
+        containerEls[number].innerHTML = containerHTML
     }
 
     
@@ -145,6 +146,7 @@ function genertateRandomWord(){
 }
 
 function showRandomWords(){
+    //random word 생길때마다 음.. 그거 그 뭐냐 디브 추가해줘야 할듯 그걸 옮겨야 할 듯 텍스트를 옮기는게 아니라
     const randomNum = Math.floor(Math.random() * (words.length + 1));
     const randomWord = words[randomNum];
     if(done == 0){
