@@ -85,7 +85,9 @@ function rainWord(number, word){
         containerEls[number].innerHTML = containerHTML
     }
 
-    
+    if(second === true){
+        
+    }
         
     first = false;    
 
