@@ -7,6 +7,7 @@ const containerOne = document.querySelector("#container1");
 const containerTwo = document.querySelector("#container2");
 const containerThree = document.querySelector("#container3");
 // const span = document.querySelector(".game-view span");
+const childOriginDiv = document.querySelector(".container-el");
 
 
 let words = ["Star","Tree", "Airplane", "Tail", "Basketball",  "Mouth", "Telephone", "Chin", "Jar",  "Smile", "Cheek", "Ear", "Drum","Room", "Turtle","Wings","Doll","Bird","Spider","Hopscotch","Happy","Baby","Monkey","Pig","Jump","Crayon", "Arm","Arm","Rabbit", "Book", "Camera", "Rock", "Chicken", "Robot", "Drink","Balloon","Kangaroo","Clap","Baseball","Milk","Icecream", "Circle","Book","Sneeze","Dog","Flower","Pillow","Sleep","Spoon","Skip","Football", "Kick","Head","Sunglasses","Mosquito","Pinch","Chair","Jump"]
@@ -19,6 +20,7 @@ let second = false;
 let done = 0;
 let randomWords = [];
 let oper = false;
+let fff = [];
 
 function handleTextAlign(){
     const randomNumForStyle = Math.floor(Math.random() * 4);
@@ -82,10 +84,36 @@ function rainWord(number, word){
         div.innerText = word;
         containerCols[0].appendChild(div); 
     }else{
-        const haveChildCols = [...containerCols].filter(col => {
+        const haveChildCols = [...containerCols].filter((col) => {
             return col.hasChildNodes();
         })
-        
+       
+        const originWords = haveChildCols.reduce((acc, cur, i) => {
+            acc[i] = cur.children[0].innerText;
+            return acc;
+        },[])
+
+        console.log(originWords);
+
+        haveChildCols.map((col,i) => {
+            col.removeChild(col.childNodes[0]);
+            const div = document.createElement("div");
+            div.classList.add("container-el")
+            div.innerText = originWords[i];
+            col.nextElementSibling.appendChild(div);
+        })
+
+        // const sadas = [...containerCols];
+        // sadas.forEach((col,i) => {
+        //     if(col.hasChildNodes()){
+        //         fff.push(i);
+        //     }
+        // })
+
+        // haveChildCols.map((col,i)=>{
+
+        // })
+        // for(let col of )
         // const resultIndex = [...containerCols].findIndex( col => col.hasChildNodes())//얘보다 더 좋은 방법을 찾아야 
         // const childDiv = containerCols[resultIndex].children[0]
         // const originWord = childDiv.innerText;
