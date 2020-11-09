@@ -82,14 +82,18 @@ function rainWord(number, word){
         div.innerText = word;
         containerCols[0].appendChild(div); 
     }else{
-        const resultIndex = [...containerCols].findIndex( col => col.hasChildNodes())//얘보다 더 좋은 방법을 찾아야 
-        const childDiv = containerCols[resultIndex].children[0]
-        const originWord = childDiv.innerText;
-        childDiv.innerText = "";
-        const newDiv = document.createElement("div");
-        newDiv.classList.add("container-el");
-        newDiv.innerText = originWord;
-        containerCols[resultIndex +  1].appendChild(newDiv);
+        const haveChildCols = [...containerCols].filter(col => {
+            return col.hasChildNodes();
+        })
+        
+        // const resultIndex = [...containerCols].findIndex( col => col.hasChildNodes())//얘보다 더 좋은 방법을 찾아야 
+        // const childDiv = containerCols[resultIndex].children[0]
+        // const originWord = childDiv.innerText;
+        // childDiv.innerText = "";
+        // const newDiv = document.createElement("div");
+        // newDiv.classList.add("container-el");
+        // newDiv.innerText = originWord;
+        // containerCols[resultIndex +  1].appendChild(newDiv);
     }
     
 
