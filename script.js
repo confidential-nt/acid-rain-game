@@ -45,14 +45,23 @@ function handleTextAlign(){
 }
 
 
+function handleGameOver(){
+    const divCol = document.querySelectorAll("#container1 .container-col");
+    const divEl = document.querySelectorAll("#container1 .container-col .container-el");
+    if(divEl.length === divCol.length - 1){
+        alert("game over!");
+    }
+}
+
 
 function handleGamePlay(event){
     event.preventDefault();
-    const playSpan = document.querySelectorAll("span");
-    playSpan.forEach(span => {
-        if(span.innerText == gameInput.value){
-            span.classList.add("hide");
-            gameInput.value = "";
+    const playDiv = document.querySelectorAll(".container-col");
+    const haveChild = [...playDiv].filter(div => div.hasChildNodes());
+    haveChild.forEach(div => {
+        if(div.childNodes[0].innerText == gameInput.value){
+            div.removeChild(div.childNodes[0]);
+            this.reset();
         }
     })
 }
@@ -262,6 +271,7 @@ function showRandomWords(){
     // })
 
     rainWord(proceed, randomWord);
+    handleGameOver();
     // dada(proceed, randomWord);
     // adas(proceed,randomWord);
     done++;
