@@ -14,13 +14,17 @@ let words = ["Star","Tree", "Airplane", "Tail", "Basketball",  "Mouth", "Telepho
 let done = 0;
 let randomWords = [];
 let oper = false;
+let operSec = false;
+let operThir = false;
 let finish = false;
 
 
 function handleGameOver(){
-    const divCol = document.querySelectorAll("#container1 .container-col");
+    const divColOne = document.querySelectorAll("#container1 .container-col");
+    const divColTwo = document.querySelectorAll("#container2 .container-col");
+    const divColThree = document.querySelectorAll("#container3 .container-col");
     const divEl = document.querySelectorAll("#container1 .container-col .container-el");
-    if(divCol[divCol.length -1].hasChildNodes()){
+    if(divColOne[divColOne.length -1].hasChildNodes() || divColTwo[divColTwo.length -1].hasChildNodes() || divColThree[divColThree.length -1].hasChildNodes()){
         alert("game over!");
         finish = !finish;
         
@@ -40,9 +44,82 @@ function handleGamePlay(event){
     })
 }
 
+function rainWordThir(word){
+    setTimeout(() => {
+        operThir = !operThir;
+    // const randomNum = MMath.floor(Math.random() * 3) + 1
+    const containerCols = containerThree.querySelectorAll(".container-col");
+    if(operThir === true){
+        const div = document.createElement("div");
+        div.classList.add("container-el");
+        div.innerText = word;
+        containerCols[0].appendChild(div); 
+    }else{
+        const haveChildCols = [...containerCols].filter((col) => {
+            return col.hasChildNodes();
+        })
+       
+        const originWords = haveChildCols.reduce((acc, cur, i) => {
+            acc[i] = cur.children[0].innerText;
+            return acc;
+        },[])
+
+        console.log(originWords);
+
+        haveChildCols.map((col,i) => {
+            col.removeChild(col.childNodes[0]);
+            const div = document.createElement("div");
+            div.classList.add("container-el")
+            div.innerText = originWords[i];
+            col.nextElementSibling.appendChild(div);
+        })
+
+    }
+    }
+
+    ,6000)
+}
+
+function rainWordSec(word){
+    setTimeout(() => {
+        operSec = !operSec;
+    // const randomNum = MMath.floor(Math.random() * 3) + 1
+    const containerCols = containerTwo.querySelectorAll(".container-col");
+    if(operSec === true){
+        const div = document.createElement("div");
+        div.classList.add("container-el");
+        div.innerText = word;
+        containerCols[0].appendChild(div); 
+    }else{
+        const haveChildCols = [...containerCols].filter((col) => {
+            return col.hasChildNodes();
+        })
+       
+        const originWords = haveChildCols.reduce((acc, cur, i) => {
+            acc[i] = cur.children[0].innerText;
+            return acc;
+        },[])
+
+        console.log(originWords);
+
+        haveChildCols.map((col,i) => {
+            col.removeChild(col.childNodes[0]);
+            const div = document.createElement("div");
+            div.classList.add("container-el")
+            div.innerText = originWords[i];
+            col.nextElementSibling.appendChild(div);
+        })
+
+    }
+    }
+
+    ,3000)
+}
+
 
 function rainWord(word){
     oper = !oper;
+    // const randomNum = MMath.floor(Math.random() * 3) + 1
     const containerCols = containerOne.querySelectorAll(".container-col");
     if(oper === true){
         const div = document.createElement("div");
@@ -76,6 +153,7 @@ function rainWord(word){
 function genertateRandomWord(){
    const loop = setTimeout(()=>{
         showRandomWords();
+        handleGameOver()
         genertateRandomWord();
     },3000);
    
@@ -88,6 +166,8 @@ function showRandomWords(){
    
     const randomNum = Math.floor(Math.random() * (words.length + 1));
     const randomWord = words[randomNum];
+    const randomWordSec = words[randomNum + 1];
+    const randomWordThir = words[randomNum + 2];
     if(done == 0){
         for(let i = 0; i < (gameView.offsetHeight/20); i++){
             const diva = document.createElement("div");
@@ -106,9 +186,11 @@ function showRandomWords(){
 
 
     rainWord(randomWord);
-    handleGameOver();
-    // dada(proceed, randomWord);
-    // adas(proceed,randomWord);
+    
+    rainWordSec(randomWordSec);
+    
+    rainWordThir(randomWordThir);
+  
     done++;
     
 }
