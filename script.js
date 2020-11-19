@@ -6,7 +6,7 @@ const containers = document.querySelectorAll(".container");
 const containerOne = document.querySelector("#container1");
 const containerTwo = document.querySelector("#container2");
 const containerThree = document.querySelector("#container3");
-const childOriginDiv = document.querySelector(".container-el");
+
 
 
 let words = ["Star","Tree", "Airplane", "Tail", "Basketball",  "Mouth", "Telephone", "Chin", "Jar",  "Smile", "Cheek", "Ear", "Drum","Room", "Turtle","Wings","Doll","Bird","Spider","Hopscotch","Happy","Baby","Monkey","Pig","Jump","Crayon", "Arm","Arm","Rabbit", "Book", "Camera", "Rock", "Chicken", "Robot", "Drink","Balloon","Kangaroo","Clap","Baseball","Milk","Icecream", "Circle","Book","Sneeze","Dog","Flower","Pillow","Sleep","Spoon","Skip","Football", "Kick","Head","Sunglasses","Mosquito","Pinch","Chair","Jump"]
@@ -23,7 +23,9 @@ function handleGameOver(){
     const divColOne = document.querySelectorAll("#container1 .container-col");
     const divColTwo = document.querySelectorAll("#container2 .container-col");
     const divColThree = document.querySelectorAll("#container3 .container-col");
-    const divEl = document.querySelectorAll("#container1 .container-col .container-el");
+
+    if(!divColOne[0] || !divColTwo[0] || !divColThree[0]) return;
+   
     if(divColOne[divColOne.length -1].hasChildNodes() || divColTwo[divColTwo.length -1].hasChildNodes() || divColThree[divColThree.length -1].hasChildNodes()){
         alert("game over!");
         finish = !finish;
@@ -47,7 +49,7 @@ function handleGamePlay(event){
 function rainWordThir(word){
     setTimeout(() => {
         operThir = !operThir;
-    // const randomNum = MMath.floor(Math.random() * 3) + 1
+    
     const containerCols = containerThree.querySelectorAll(".container-col");
     if(operThir === true){
         const div = document.createElement("div");
@@ -83,7 +85,7 @@ function rainWordThir(word){
 function rainWordSec(word){
     setTimeout(() => {
         operSec = !operSec;
-    // const randomNum = MMath.floor(Math.random() * 3) + 1
+    
     const containerCols = containerTwo.querySelectorAll(".container-col");
     if(operSec === true){
         const div = document.createElement("div");
@@ -119,7 +121,7 @@ function rainWordSec(word){
 
 function rainWord(word){
     oper = !oper;
-    // const randomNum = MMath.floor(Math.random() * 3) + 1
+    
     const containerCols = containerOne.querySelectorAll(".container-col");
     if(oper === true){
         const div = document.createElement("div");
@@ -152,14 +154,16 @@ function rainWord(word){
 
 function genertateRandomWord(){
    const loop = setTimeout(()=>{
-        showRandomWords();
         handleGameOver()
+        if(finish){
+            clearTimeout(loop);
+            return;
+        } 
+        showRandomWords();
         genertateRandomWord();
     },3000);
    
-   if(finish){
-       clearTimeout(loop);
-   } 
+  
 }
 
 function showRandomWords(){
@@ -183,6 +187,8 @@ function showRandomWords(){
             containerThree.appendChild(divc)
         }
     }
+
+    if(finish) return;
 
 
     rainWord(randomWord);
